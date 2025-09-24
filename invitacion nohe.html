@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis 15 Años - Valery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales del cuerpo */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #f8e1c6;
+            display: flex;
+            min-height: 100vh;
+            background-color: #000000;
+        }
+
+        /* Contenedor principal para la división de la página */
+        .main-container {
+            display: flex;
+            width: 100%;
+            flex-direction: column; /* Para móviles */
+        }
+
+        /* Sección de la imagen (lado izquierdo) - Ahora es el carrusel */
+        .photo-section {
+            flex: 1;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            padding: 20px 0;
+        }
+        
+        /* Estilos para el carrusel de fotos */
+        .carousel-container {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .carousel-slide {
+            flex-shrink: 0;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .carousel-btn.prev { left: 10px; }
+        .carousel-btn.next { right: 10px; }
+
+
+        /* Sección del contenido (lado derecho) */
+        .content-section {
+            background-color: #000000;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Media queries para adaptar el diseño a pantallas más grandes */
+        @media (min-width: 768px) {
+            .main-container {
+                flex-direction: row;
+            }
+        }
+
+        /* Estilo del mapa */
+        .map-container {
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 300px;
+            border: 0;
+        }
+
+        /* Ícono de música - Ahora es un botón */
+        .music-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #f8e1c6;
+            background: none;
+            border: none;
+        }
+        .music-button.playing {
+            color: #e6c8a2; /* Color cuando la música está sonando */
+        }
+
+        /* Oculta los controles del reproductor */
+        .hidden-audio {
+            display: none;
+        }
+
+        /* Estilos del contenido de la invitación */
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: #f8e1c6;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 0;
+        }
+
+        .date-box {
+            border: 1px solid #f8e1c6;
+            padding: 5px 15px;
+            margin-bottom: 20px;
+        }
+
+        .quote {
+            font-style: italic;
+            margin: 30px 0;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .details {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .countdown div {
+            text-align: center;
+        }
+
+        .countdown span {
+            display: block;
+            font-size: 0.5em;
+            font-weight: normal;
+            color: #f8e1c6;
+        }
+
+        /* Estilos del formulario */
+        form {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 80%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #f8e1c6;
+            background-color: transparent;
+            color: #f8e1c6;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #f8e1c6;
+            color: #581845;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e6c8a2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="photo-section">
+            
+            <button id="music-button" class="music-button">🎵</button>
+            
+            <audio id="background-music" loop>
+                <source src="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\La Bella y la Bestia _ Canción_ 'Bella y Bestia Son'  HD.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="carousel-slide"><img src="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img1.jpg" alt="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img1.jpg"></div>
+                    <div class="carousel-slide"><img src="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img2.jpg" alt="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img2.jpg"></div>
+                    <div class="carousel-slide"><img src="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img3.jpg" alt="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img3.jpg"></div>
+                    <div class="carousel-slide"><img src="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img4.jpg" alt="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img4.jpg"></div>
+                    <div class="carousel-slide"><img src="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img5.jpg" alt="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img5.jpg"></div>
+                    <div class="carousel-slide"><img src="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img6.jpg" alt="C:\Users\cinth\OneDrive\Escritorio\fotos invitacion.html\img6.jpg"></div>
+                </div>
+                <button class="carousel-btn prev">❮</button>
+                <button class="carousel-btn next">❯</button>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="date-box">22.11.2025</div>
+            <h1>Valery</h1>
+            <h2>Mis 15 años</h2>
+            <p class="quote">
+                "Te espero para compartir la alegría de esa noche que será para mí mágica, inolvidable y única."
+            </p>
+            <div class="details">
+                <p><strong>Fecha:</strong> Viernes, 22 de noviembre</p>
+                <p><strong>Hora:</strong> 6:00 p.m.</p>
+                <p><strong>Lugar:</strong> Carrera 31D 1A-10</p>
+            </div>
+            <div class="map-container">
+                <p><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9604065867366!2d-74.10895092603474!3d4.601114342514923!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f993c758aa3f9%3A0x8259f279c0ab765b!2zQ3JhLiAzMWQgIyAxQy0xMCwgUHVlbnRlIEFyYW5kYSwgQm9nb3TDoSwgRC5DLiwgQm9nb3TDoSwgQm9nb3TDoSwgRC5DLg!5e0!3m2!1ses-419!2sco!4v1758673547142!5m2!1ses-419!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
+            </div>
+            <div class="countdown">
+                <div id="days"></div>
+                <div id="hours"></div>
+                <div id="minutes"></div>
+                <div id="seconds"></div>
+            </div>
+            <h3>Confirma tu Asistencia</h3>
+            <form action="https://formspree.io/f/xanpwjpn" method="POST">
+                <label>Tu nombre:<input type="text" name="name" required></label>
+                <label>Tu email:<input type="email" name="email"></label>
+                <button type="submit">Confirmar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Lógica para el contador
+        const eventDate = new Date("November 22, 2025 18:00:00").getTime();
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerHTML = days + "<span>Días</span>";
+            document.getElementById("hours").innerHTML = hours + "<span>Horas</span>";
+            document.getElementById("minutes").innerHTML = minutes + "<span>Minutos</span>";
+            document.getElementById("seconds").innerHTML = seconds + "<span>Segundos</span>";
+            
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("days").innerHTML = "¡";
+                document.getElementById("hours").innerHTML = "La";
+                document.getElementById("minutes").innerHTML = "fiesta";
+                document.getElementById("seconds").innerHTML = "empezó!";
+            }
+        }, 1000);
+        
+        // Lógica para el carrusel de fotos
+        const carouselTrack = document.querySelector('.carousel-track');
+        const slides = Array.from(carouselTrack.children);
+        const nextButton = document.querySelector('.carousel-btn.next');
+        const prevButton = document.querySelector('.carousel-btn.prev');
+        let slideIndex = 0;
+        
+        function getSlideWidth() {
+            return slides[0] ? slides[0].getBoundingClientRect().width : 0;
+        }
+
+        function updateCarousel() {
+            const slideWidth = getSlideWidth();
+            carouselTrack.style.transform = `translateX(-${slideWidth * slideIndex}px)`;
+        }
+
+        nextButton.addEventListener('click', () => {
+            slideIndex = (slideIndex + 1) % slides.length;
+            updateCarousel();
+        });
+        
+        prevButton.addEventListener('click', () => {
+            slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+            updateCarousel();
+        });
+        
+        window.addEventListener('resize', updateCarousel);
+        window.addEventListener('load', updateCarousel);
+
+        // Lógica para el botón de música
+        const musicButton = document.getElementById('music-button');
+        const backgroundMusic = document.getElementById('background-music');
+
+        musicButton.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                musicButton.classList.add('playing');
+            } else {
+                backgroundMusic.pause();
+                musicButton.classList.remove('playing');
+            }
+        });
+    </script>
+</body>
+</html>
